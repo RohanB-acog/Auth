@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
+import LinkedInProvider from 'next-auth/providers/linkedin';
 import { db } from '@/lib/db';
 import { createSession } from '@/lib/auth';
 
@@ -25,6 +26,10 @@ const handler = NextAuth({
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
+    }),
+    LinkedInProvider({
+      clientId: process.env.LINKEDIN_CLIENT_ID!,
+      clientSecret: process.env.LINKEDIN_CLIENT_SECRET!,
     }),
     CredentialsProvider({
       name: 'OTP',
@@ -78,7 +83,7 @@ const handler = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account?.provider === 'google' || account?.provider === 'github') {
+      if (account?.provider === 'google' || account?.provider === 'github' || account?.provider === 'linkedin') {
         const stmt = db.prepare(`
           INSERT INTO users (id, email)
           VALUES (?, ?)

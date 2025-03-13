@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Github } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 import AuthCode from 'react-auth-code-input';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -103,7 +103,7 @@ export default function LoginForm() {
     }
   };
 
-  const handleOAuthSignIn = (provider: 'google' | 'github') => {
+  const handleOAuthSignIn = (provider: 'google' | 'github' | 'linkedin') => {
     signIn(provider, { callbackUrl: '/dashboard' });
   };
 
@@ -207,6 +207,14 @@ export default function LoginForm() {
                     >
                       <Github className="h-5 w-5" />
                       GitHub
+                    </button>
+
+                    <button
+                      onClick={() => handleOAuthSignIn('linkedin')}
+                      className="w-full h-12 flex items-center justify-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      <Linkedin className="h-5 w-5 text-blue-700 dark:text-blue-500" />
+                      LinkedIn
                     </button>
                   </div>
                 </div>
